@@ -1,0 +1,6 @@
+# Put your Python dependencies in this file in the following form:
+# flask==0.11.1
+# requests==2.11.0
+#
+# To install your dependencies run the following command in your terminal:
+# pip install --upgrade -r requirements.txt
