@@ -29,16 +29,16 @@ def main():
     grid[7] = [0,4,0,0,0,0,0,0,3]
     grid[8] = [9,3,0,0,7,0,8,0,0]
 
-#     grid[0] = [1,0,5,0,0,3,4,6,0]
-#     grid[1] = [7,0,0,2,4,0,0,0,9]
-#     grid[2] = [0,0,0,0,0,0,0,0,0]
-#     grid[3] = [6,0,7,0,1,0,0,0,0]
-#     grid[4] = [0,0,0,0,8,0,1,0,0]
-#     grid[5] = [5,0,9,0,0,6,0,8,7]
-#     grid[6] = [3,0,0,0,5,0,2,0,0]
-#     grid[7] = [0,0,1,0,0,2,0,4,3]
-#     grid[8] = [0,7,8,1,0,0,0,9,0]
-#
+    grid[0] = [1,0,5,0,0,3,4,6,0]
+    grid[1] = [7,0,0,2,4,0,0,0,9]
+    grid[2] = [0,0,0,0,0,0,0,0,0]
+    grid[3] = [6,0,7,0,1,0,0,0,0]
+    grid[4] = [0,0,0,0,8,0,1,0,0]
+    grid[5] = [5,0,9,0,0,6,0,8,7]
+    grid[6] = [3,0,0,0,5,0,2,0,0]
+    grid[7] = [0,0,1,0,0,2,0,4,3]
+    grid[8] = [0,7,8,1,0,0,0,9,0]
+
     grid[0] = [0,2,1,0,7,9,0,8,5]
     grid[1] = [0,4,5,3,1,0,0,0,9]
     grid[2] = [0,7,0,0,4,0,0,1,0]
@@ -48,6 +48,16 @@ def main():
     grid[6] = [6,0,8,0,0,0,0,0,0]
     grid[7] = [0,9,4,0,0,7,8,0,0]
     grid[8] = [2,0,0,5,0,0,0,4,0]
+
+    grid[0] = [0,0,0,5,4,6,0,0,9]
+    grid[1] = [0,2,0,0,0,0,0,0,7]
+    grid[2] = [0,0,3,9,0,0,0,0,4]
+    grid[3] = [9,0,5,0,0,0,0,7,0]
+    grid[4] = [7,0,0,0,0,0,0,2,0]
+    grid[5] = [0,0,0,0,9,3,0,0,0]
+    grid[6] = [0,5,6,0,0,8,0,0,0]
+    grid[7] = [0,1,0,0,3,9,0,0,0]
+    grid[8] = [0,0,0,0,0,0,8,0,6]
 
     grid = np.array(grid)
     print("Start with %d digits" % np.count_nonzero(grid))
@@ -72,7 +82,7 @@ def main():
         idx[:,c] = True
         model.subscribe({'idx':idx},model.check_constraint,{'idx':idx},"alldifferent")
 
-    # in block
+    # per block
     for r in range(3):
         for c in range(3):
             bxl,bxr,byt,byb = r*3,(r+1)*3,c*3,(c+1)*3
@@ -82,8 +92,9 @@ def main():
 
 
     model.solve()
-
+#     model.print_search_space()
     solution = model.get_solution()
+
     print_sudoku(solution)
     print("finished in ",timer()-start)
     print("nof function calls", model.nof_calls)
