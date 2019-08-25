@@ -55,44 +55,6 @@ class Model:
 
     def check_constraint(self,opts,operator):
             if operator == "alldifferent":
-                """
-                ss_idx = opts['idx']
-                values = self.search_space[ss_idx]
-
-                already_know = []
-                new_possible = [False]*len(values)
-                i = 0
-                for v in values:
-                    if 'value' in v:
-                        already_know.append(v['value'])
-                        new_possible[i] = {'value': v['value']}
-                    i += 1
-
-                new_knowledge = [False]*len(values)
-                i = 0
-                for v in values:
-                    if 'value' not in v:
-                        new = [x for x in v['values'] if x not in already_know]
-                        if len(new) < len(v['values']):
-                            if len(new) == 1:
-                                new_possible[i] = {'value': new[0]}
-                            else:
-                                new_possible[i] = {'values': new}
-                            new_knowledge[i] = True
-                        else:
-                            new_possible[i] = {'values': v['values']}
-                    i += 1
-
-
-
-                old_changed = self.changed.copy()
-                self.changed[ss_idx] = new_knowledge
-                self.changed = np.logical_or(self.changed,old_changed)
-
-                self.search_space[ss_idx] = new_possible
-                return
-            """
-
                 # check feasibility
                 ss_idx = opts['idx']
                 values = self.search_space[ss_idx]
@@ -110,7 +72,7 @@ class Model:
                         already_know[i] = 1
 
                 # get the maximum matching of this graph
-                matching = nx.bipartite.maximum_matching(G)
+                matching = nx.bipartite.maximum_matching(G, top_nodes=["x_"+str(i) for i in range(len(values))])
 #                 print(matching)
 
                 n_matching = []
@@ -134,7 +96,7 @@ class Model:
                 # find free vertex
         #         print("GM edges", GM.edges())
                 for n in GM.nodes():
-                    if str(n)[:2] != "x_" and len(GM.predecessors(n)) == 0:
+                    if str(n)[:2] != "x_" and len(list(GM.predecessors(n))) == 0:
                         print("Free vertex: ", n)
                         raise InfeasibleError("Free vertex shouldn't exist")
 

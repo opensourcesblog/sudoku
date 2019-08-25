@@ -3,6 +3,7 @@ from timeit import default_timer as timer
 import numpy as np
 from Modules.Model import Model
 from Modules.Error import InfeasibleError
+import sys
 
 def print_sudoku(grid):
     for r in range(len(grid)):
@@ -19,47 +20,16 @@ def print_sudoku(grid):
 
 def main():
     grid = [[0]*9 for i in range(9)]
-    grid[0] = [1,0,0,4,5,0,0,3,0]
-    grid[1] = [2,0,0,6,8,0,5,0,0]
-    grid[2] = [0,8,5,0,1,0,0,9,0]
-    grid[3] = [0,9,7,0,0,0,0,0,2]
-    grid[4] = [0,2,0,0,6,1,0,0,0]
-    grid[5] = [0,0,0,8,0,0,0,0,0]
-    grid[6] = [7,5,2,0,3,0,0,0,9]
-    grid[7] = [0,4,0,0,0,0,0,0,3]
-    grid[8] = [9,3,0,0,7,0,8,0,0]
-
-    grid[0] = [1,0,5,0,0,3,4,6,0]
-    grid[1] = [7,0,0,2,4,0,0,0,9]
-    grid[2] = [0,0,0,0,0,0,0,0,0]
-    grid[3] = [6,0,7,0,1,0,0,0,0]
-    grid[4] = [0,0,0,0,8,0,1,0,0]
-    grid[5] = [5,0,9,0,0,6,0,8,7]
-    grid[6] = [3,0,0,0,5,0,2,0,0]
-    grid[7] = [0,0,1,0,0,2,0,4,3]
-    grid[8] = [0,7,8,1,0,0,0,9,0]
-
-    grid[0] = [0,2,1,0,7,9,0,8,5]
-    grid[1] = [0,4,5,3,1,0,0,0,9]
-    grid[2] = [0,7,0,0,4,0,0,1,0]
-    grid[3] = [0,0,0,1,0,8,0,3,6]
-    grid[4] = [0,6,0,0,0,0,2,0,8]
-    grid[5] = [0,0,0,0,0,3,0,0,4]
-    grid[6] = [6,0,8,0,0,0,0,0,0]
-    grid[7] = [0,9,4,0,0,7,8,0,0]
-    grid[8] = [2,0,0,5,0,0,0,4,0]
-
-    grid[0] = [0,0,0,5,4,6,0,0,9]
-    grid[1] = [0,2,0,0,0,0,0,0,7]
-    grid[2] = [0,0,3,9,0,0,0,0,4]
-    grid[3] = [9,0,5,0,0,0,0,7,0]
-    grid[4] = [7,0,0,0,0,0,0,2,0]
-    grid[5] = [0,0,0,0,9,3,0,0,0]
-    grid[6] = [0,5,6,0,0,8,0,0,0]
-    grid[7] = [0,1,0,0,3,9,0,0,0]
-    grid[8] = [0,0,0,0,0,0,8,0,6]
+    f = open(sys.argv[1], "r")
+    lines = f.readlines()
+    f.close()
+    c = 0
+    for line in lines:
+        grid[c] = list(map(int, line.split()))
+        c += 1
 
     grid = np.array(grid)
+
     print("Start with %d digits" % np.count_nonzero(grid))
     start = timer()
 
